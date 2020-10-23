@@ -1,42 +1,23 @@
-(function(window) {
-  'use strict';
-  var App = window.App || {};
-  var Promise = window.Promise;
+(function (window) {
+    'use strict';
 
-  function DataStore() {
-    this.data = {};
-  }
+    var App = window.App || {};
 
-  DataStore.prototype.add = function(key, val) {
-    this.data[key] = val;
-    var promise = new Promise(function(resolve, reject) {
-      this.data[key] = val;
-      resolve();
-    }.bind(this));
+    class DataStore {
+        constructor() {
+            // console.log('running the DataStore function');
+            this.data = {};
+        }
+        async add(key, val) { this.data[key] = val;  return null; }
 
-    return promise;
-  };
-  DataStore.prototype.get = function(key) {
-    var promise = new Promise(function(resolve, reject) {
-      resolve(this.data[key]);
-    }.bind(this));
+        async get(key) { return this.data[key];  }
+        
+        async getAll() { return this.data;  }
+        
+        async remove(key) { delete this.data[key];  return null; }
+    }
 
-    return promise;
-  };
-  DataStore.prototype.getAll = function() {
-    var promise = new Promise(function(resolve, reject) {
-      resolve(this.data);
-    }.bind(this));
-    return promise;
-  };
-  DataStore.prototype.remove = function(key) {
-    var promise = new Promise(function(resolve, reject) {
-      delete this.data[key];
-      resolve();
-    }.bind(this));
-    return promise;
-  };
-
-  App.DataStore = DataStore;
-  window.App = App;
+    App.DataStore = DataStore;
+    window.App = App;
+    
 })(window);
